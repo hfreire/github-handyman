@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/hfreire/github-handyman.svg?branch=master)](https://travis-ci.org/hfreire/github-handyman)
 [![Coverage Status](https://coveralls.io/repos/github/hfreire/github-handyman/badge.svg?branch=master)](https://coveralls.io/github/hfreire/github-handyman?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/hfreire/github-handyman/badge.svg)](https://snyk.io/test/github/hfreire/github-handyman)
-[![](https://img.shields.io/github/release/hfreire/github-handyman.svg)](https://github.com/hfreire/github-handyman/releases)
+[![](https://img.shields.io/github/release/hfreire/github-handyman.svg)](https://github.com/hfreire/github-handyman/releases) [![Greenkeeper badge](https://badges.greenkeeper.io/hfreire/github-handyman.svg)](https://greenkeeper.io/)
 
 >
 
