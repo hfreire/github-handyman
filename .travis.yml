@@ -1,0 +1,51 @@
+sudo: required
+language: node_js
+env:
+  global:
+    - VERSION=$TRAVIS_TAG
+    - VERSION_COMMIT=$TRAVIS_COMMIT
+services:
+  - docker
+node_js:
+  - 10.13
+cache:
+  directories:
+    - node_modules
+notifications:
+  email: false
+  slack:
+    rooms:
+      secure: OwgQSTc4xm56PAu/rnRK0emVexvlzN5A8ag3GWJytdzsI90OMr+GLhbZx6FMlcSNxmzQpt01psvxwTUJg/Remh1PcD01MPfspl5j3QFj1XZ6dQVWeI3poMqLMjfq7kNs569s1Q/P4HNXuSVm8967i4GVvn8249rh+v6LECcjOKKG5bbNRuk2otPLreIFwuwOdk8VB89w9Y76JE15Sqacerr9GaO+UNjwc14cYCS2QGbGCp3IOy9ZiNdbS9IkXsu+93wPf32HsKkU6ECNgnCgAuEcxdyak8Iqj21yEyoT0f6CKGZVyB348PvDCR4xFTozdv59eowKgG6z/K2D5bx7CLJMSOL8Wsp65JxiSjQRAPlA7KhllLn1QbkugCnAei7r1v7/apYfysEbX4pQ0dLUEZtyGmuzF/+ADxkty7PobjpJCLo4N0oGt1E6Z0MT3Z/VCrFT+R31JlSqrrlrK/zQGefNI0TJ1DfpuIZfu1SPPOhqEN5yYKvp9iOFEkchX4QhJZjJLwyTKZ9XgiRrP91NVY53Nxz1vvoJcAeqt8HY/G2irZTJFllaA76p+pnO8lS6T6s93NkwNCi1XjcGHAtlSxty/n3gl5IOeZiQL0j31rElLO6NHAnWdEgUv0VyuuFVei3KXYXUO6VAmAWWCy+1QMxyKghUT9gclVxnCZuEzJ0=
+    on_success: never
+    on_failure: change
+    on_pull_requests: false
+before_install:
+  - npm install -g greenkeeper-lockfile@1
+install:
+  - npm install
+  - 'curl -fSL "https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip"
+  -o terraform.zip && \
+
+  echo "43543a0e56e31b0952ea3623521917e060f2718ab06fe2b2d506cfaa14d54527 *terraform.zip"
+  | sha256sum -c - && \
+
+  sudo unzip -d /usr/local/bin/ terraform.zip
+
+  '
+before_script:
+  - npm prune
+  - greenkeeper-lockfile-update
+script:
+  - 'npm test && \
+
+  npm run build
+
+  '
+after_success:
+  - npm run coveralls
+  - npm run semantic-release
+  - '[ -n "$TRAVIS_TAG" ] && npm run deploy
+
+  '
+after_script:
+  - greenkeeper-lockfile-upload

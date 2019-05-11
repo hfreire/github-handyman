@@ -1,0 +1,10 @@
+.idea
+build
+coverage
+node_modules
+*.iml
+
+.terraform*
+terraform.*
+
+.serverless
