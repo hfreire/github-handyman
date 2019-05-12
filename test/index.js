@@ -10,6 +10,8 @@ describe('Module', () => {
   let handler
 
   beforeAll(() => {
+    process.env.GH_TOKEN = 'my-token'
+
     handler = require('../src/handler')
     jest.mock('../src/handler')
   })

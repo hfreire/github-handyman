@@ -8,3 +8,9 @@ provider "aws" {
   region  = "${var.aws_region}"
   version = "1.60"
 }
+
+data "aws_vpc" "selected" {
+  tags {
+    Name = "${var.infrastructure_name}"
+  }
+}

@@ -8,7 +8,8 @@ provider:
   region: ${file(share/terraform/terraform.json):aws_region}
   memorySize: 128
   environment:
-    SLACK_WEBHOOK_URL: ${env:SLACK_WEBHOOK_URL}
+    GH_TOKEN: ${env:GH_TOKEN}
+    GH_OWNERS: ${env:GH_OWNERS}
 
 plugins:
   - serverless-plugin-include-dependencies
@@ -36,6 +37,7 @@ functions:
     handler: build/index.handler
     events:
       - schedule: rate(30 minutes)
+    timeout: 240
 
 resources:
   Resources:
