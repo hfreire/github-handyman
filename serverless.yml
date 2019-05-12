@@ -37,7 +37,7 @@ functions:
     handler: build/index.handler
     events:
       - schedule: rate(30 minutes)
-    timeout: 240
+    timeout: 480
 
 resources:
   Resources:
