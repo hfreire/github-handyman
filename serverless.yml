@@ -9,7 +9,7 @@ provider:
   memorySize: 128
   environment:
     GH_TOKEN: ${env:GH_TOKEN}
-    GH_OWNERS: ${env:GH_OWNERS}
+    GH_ORGS: ${env:GH_ORGS}
 
 plugins:
   - serverless-plugin-include-dependencies

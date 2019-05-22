@@ -6,25 +6,28 @@
  */
 
 const GH_TOKEN = process.env.GH_TOKEN
-const GH_OWNERS = process.env.GH_OWNERS
+const GH_ORGS = process.env.GH_ORGS
 
 const _ = require('lodash')
 
 const GitHubWrapper = require('@dog-ai/github-wrapper')
 
-const owners = _.words(GH_OWNERS, /[^, ]+/g) || []
-const github = new GitHubWrapper({ github: { type: 'token', token: GH_TOKEN } })
+const github = new GitHubWrapper({ octokit: { auth: GH_TOKEN } })
+
+const orgs = _.words(GH_ORGS, /[^, ]+/g) || []
+const owners = [ undefined ].concat(orgs)
+
+github.on('error', (error, owner, repo, { url }) => console.warn(`Failed to merge Greenkeeper pull request ${url} because of ${error.message}`))
+github.on('pulls:create', (owner, repo, title) => console.info(`Created pull request ${owner}/${repo} ${title}`))
+github.on('pulls:merge', (owner, repo, number) => console.info(`Merged pull request ${owner}/${repo} ${number}`))
+github.on('pulls:close', (owner, repo, number) => console.info(`Closed pull request ${owner}/${repo} ${number}`))
 
 module.exports = async () => {
-  const mergedGreenkeeperPullRequests = []
-
   for (const owner of owners) {
     try {
-      mergedGreenkeeperPullRequests.concat(await github.mergeGreenkeeperPullRequests(owner))
+      await github.mergeGreenkeeperPullRequests(owner, { repoConcurrency: 10, pullConcurrency: 5 })
     } catch (error) {
       console.error(error)
-    } finally {
-      console.log(`Merged ${mergedGreenkeeperPullRequests.length} Greenkeeper Pull Requests: ${mergedGreenkeeperPullRequests}`)
     }
   }
 }
