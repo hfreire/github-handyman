@@ -14,3 +14,18 @@ data "aws_vpc" "selected" {
     Name = "${var.infrastructure_name}"
   }
 }
+
+data "aws_subnet_ids" "selected" {
+  vpc_id = "${data.aws_vpc.selected.id}"
+
+  tags {
+    IsPrivateSubnet = true
+  }
+}
+
+data "aws_security_groups" "selected" {
+  tags = {
+    IsAntifragile = true
+    Name          = "serverless"
+  }
+}

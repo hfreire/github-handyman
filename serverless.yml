@@ -4,9 +4,13 @@ frameworkVersion: ">=1.1.0 <2.0.0"
 
 provider:
   name: aws
+  stage: ${opt:stage, 'production'}
   runtime: nodejs8.10
   region: ${file(share/terraform/terraform.json):aws_region}
   memorySize: 128
+  vpc:
+    subnetIds: ${file(share/terraform/terraform.json):aws_subnet_ids}
+    securityGroupIds: ${file(share/terraform/terraform.json):aws_security_group_ids}
   environment:
     GH_TOKEN: ${env:GH_TOKEN}
     GH_ORGS: ${env:GH_ORGS}

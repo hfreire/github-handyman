@@ -9,3 +9,15 @@ output "aws_vpc_id" {
 
   sensitive = true
 }
+
+output "aws_subnet_ids" {
+  value = "${data.aws_subnet_ids.selected.ids}"
+
+  sensitive = true
+}
+
+output "aws_security_group_ids" {
+  value = "${data.aws_security_groups.selected.ids}"
+
+  sensitive = true
+}

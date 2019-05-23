@@ -1,4 +1,4 @@
-#
+# A :construction_worker: handyman to take care of your :octocat: GitHub :construction: side work
 
 [![Build Status](https://travis-ci.org/hfreire/github-handyman.svg?branch=master)](https://travis-ci.org/hfreire/github-handyman)
 [![Coverage Status](https://coveralls.io/repos/github/hfreire/github-handyman/badge.svg?branch=master)](https://coveralls.io/github/hfreire/github-handyman?branch=master)
