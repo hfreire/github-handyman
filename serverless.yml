@@ -8,12 +8,15 @@ provider:
   runtime: nodejs8.10
   region: ${file(share/terraform/terraform.json):aws_region}
   memorySize: 128
+  versionFunctions: false
   vpc:
     subnetIds: ${file(share/terraform/terraform.json):aws_subnet_ids}
     securityGroupIds: ${file(share/terraform/terraform.json):aws_security_group_ids}
   environment:
     GH_TOKEN: ${env:GH_TOKEN}
     GH_ORGS: ${env:GH_ORGS}
+  tracing:
+    lambda: true
 
 plugins:
   - serverless-plugin-include-dependencies
