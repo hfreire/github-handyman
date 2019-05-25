@@ -5,7 +5,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/hfreire/github-handyman/badge.svg)](https://snyk.io/test/github/hfreire/github-handyman)
 [![](https://img.shields.io/github/release/hfreire/github-handyman.svg)](https://github.com/hfreire/github-handyman/releases)
 
-> Uses an [AWS Lambda](https://aws.amazon.com/lambda) to periodically look at your [GitHub](https://github.com/) repositories pull requests and get them ready to be shipped.
+> Uses an [AWS Lambda](https://aws.amazon.com/lambda) to periodically look at your [GitHub](https://github.com/) repository pull requests and get them ready to be shipped.
 ### Features
 * Automatically review, approve and merge your pull requests :white_check_mark:
 * Supports [Dependabot](https://dependabot.com) pull requests :white_check_mark:
