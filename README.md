@@ -1,11 +1,16 @@
-# A :construction_worker: handyman to take care of your :octocat: GitHub :construction: side work
+# A :construction_worker: handyman to help you out with :octocat: GitHub :construction: side work
 
 [![Build Status](https://travis-ci.org/hfreire/github-handyman.svg?branch=master)](https://travis-ci.org/hfreire/github-handyman)
 [![Coverage Status](https://coveralls.io/repos/github/hfreire/github-handyman/badge.svg?branch=master)](https://coveralls.io/github/hfreire/github-handyman?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/hfreire/github-handyman/badge.svg)](https://snyk.io/test/github/hfreire/github-handyman)
 [![](https://img.shields.io/github/release/hfreire/github-handyman.svg)](https://github.com/hfreire/github-handyman/releases)
 
->
+> Uses an [AWS Lambda](https://aws.amazon.com/lambda) to periodically look at your existing [GitHub](https://github.com/) repositories pull requests and get them ready to be shipped.
+### Features
+* Automatically review, approve and merge your pull requests :white_check_mark:
+* Supports [Dependabot](https://dependabot.com) pull requests :white_check_mark:
+* Supports [Greenkeeper](https://greenkeeper.io) pull requests :white_check_mark:
+* Uses [GitHub Wrapper](https://github.com/dog-ai/github-wrapper) :octocat: :white_check_mark:
 
 ### How to deploy
 

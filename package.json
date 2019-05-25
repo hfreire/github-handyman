@@ -1,6 +1,6 @@
 {
   "name": "github-handyman",
-  "description": "",
+  "description": "A :construction_worker: handyman to help you out with :octocat: GitHub :construction: side work",
   "version": "0.0.0",
   "engines": {
     "node": ">= 10.11"
