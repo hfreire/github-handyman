@@ -73,11 +73,14 @@ const mergeDependabotPullRequest = async function (user, owner, repo, pull) {
   const isSuccess = pull.combinedStatus.state === 'success'
 
   if (isSuccess) {
-    await this._github.requestPullRequestReview(owner, repo, pull.number, [ user ])
-    this.emit('pulls:review:request', owner, repo, pull.number, [ user ])
+    const reviews = await this._github.listPullRequestReviews(owner, repo, pull.number)
+    if (!_.find(reviews, { user: { login: user } })) {
+      await this._github.requestPullRequestReview(owner, repo, pull.number, [ user ])
+      this.emit('pulls:review:request', owner, repo, pull.number, [ user ])
 
-    await this._github.reviewPullRequest(owner, repo, pull.number, pull.head.sha, 'APPROVE')
-    this.emit('pulls:review', owner, repo, pull.number, pull.head.sha, 'APPROVE')
+      await this._github.reviewPullRequest(owner, repo, pull.number, pull.head.sha, 'APPROVE')
+      this.emit('pulls:review', owner, repo, pull.number, pull.head.sha, 'APPROVE')
+    }
 
     const title = pull.title.replace('chore(deps)', 'fix(deps)')
     await this._github.mergePullRequest(owner, repo, pull.number, pull.head.sha, 'squash', title)
@@ -95,6 +98,8 @@ const mergeGreenkeeperPullRequest = async function (user, owner, repo, pull) {
   if (isSuccess) {
     await this._github.mergePullRequest(owner, repo, pull.number, pull.head.sha)
     this.emit('pulls:merge', owner, repo, pull.number, pull.head.sha, 'squash')
+
+    return
   }
 
   if (!isSuccess && isGreenkeeperPull(pull)) {
