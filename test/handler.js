@@ -7,30 +7,30 @@
 
 describe('Handler', () => {
   let subject
-  let GitHubWrapper
+  let GitHubHandyman
 
   beforeAll(() => {
-    GitHubWrapper = require('@dog-ai/github-wrapper')
-    jest.mock('@dog-ai/github-wrapper')
+    GitHubHandyman = require('../src/github-handyman')
+    jest.mock('../src/github-handyman')
   })
 
   describe('when handling a schedule event', () => {
-    const token = 'my-token'
     const orgs = 'my-owner'
+    const token = 'my-token'
 
     beforeAll(() => {
-      process.env.GH_TOKEN = token
       process.env.GH_ORGS = orgs
+      process.env.GH_TOKEN = token
     })
 
     beforeEach(() => {
       subject = require('../src/handler')
     })
 
-    it('should merge greenkeeper pull requests for both the authenticated user and the org', async () => {
+    it('should help out with pull requests for both the authenticated user and the org', async () => {
       await subject()
 
-      expect(GitHubWrapper.mock.instances[ 0 ].mergeGreenkeeperPullRequests).toHaveBeenCalledTimes(2)
+      expect(GitHubHandyman.mock.instances[ 0 ].helpOutWithPullRequests).toHaveBeenCalledTimes(2)
     })
   })
 })
