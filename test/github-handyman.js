@@ -11,7 +11,7 @@ describe('GitHubHandman', () => {
 
   beforeAll(() => {
     GitHubWrapper = require('@dog-ai/github-wrapper')
-    //jest.mock('@dog-ai/github-wrapper')
+    jest.mock('@dog-ai/github-wrapper')
   })
 
   describe('when helping out pull requests', () => {
@@ -28,12 +28,6 @@ describe('GitHubHandman', () => {
       await subject.helpOutWithPullRequests()
 
       expect(GitHubWrapper.mock.instances[ 0 ].getUserRepos).toHaveBeenCalledTimes(1)
-    })
-
-    it('should test', async () => {
-      await subject.helpOutWithPullRequests()
-
-      console.log('g')
     })
   })
 })
