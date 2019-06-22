@@ -6,9 +6,10 @@ variable "name" {
   default = "github-handyman"
 }
 
-variable "version" {}
-
+variable "version" {
+}
 
 variable "aws_region" {
   default = "eu-west-1"
 }
+

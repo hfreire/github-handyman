@@ -1,24 +1,25 @@
 terraform {
-  required_version = ">= 0.9.3, != 0.9.5"
+  required_version = ">= 0.12"
 
-  backend "s3" {}
+  backend "s3" {
+  }
 }
 
 provider "aws" {
-  region  = "${var.aws_region}"
-  version = "1.60"
+  region  = var.aws_region
+  version = "2.14.0"
 }
 
 data "aws_vpc" "selected" {
-  tags {
-    Name = "${var.infrastructure_name}"
+  tags = {
+    Name = var.infrastructure_name
   }
 }
 
 data "aws_subnet_ids" "selected" {
-  vpc_id = "${data.aws_vpc.selected.id}"
+  vpc_id = data.aws_vpc.selected.id
 
-  tags {
+  tags = {
     IsPrivateSubnet = true
   }
 }
@@ -29,3 +30,4 @@ data "aws_security_groups" "selected" {
     Name          = "serverless"
   }
 }
+
