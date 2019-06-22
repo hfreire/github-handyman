@@ -30,4 +30,3 @@ data "aws_security_groups" "selected" {
     Name          = "serverless"
   }
 }
-
