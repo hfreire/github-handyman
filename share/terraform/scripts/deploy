@@ -1,11 +1,22 @@
 #!/usr/bin/env bash
 
-[ -z ${NAME-} ] && exit 1
-
-VERSION=$(if [ -z ${VERSION-} ]; then echo $(if [ -z ${DOCKER_TAG-} ]; then echo latest; else echo $DOCKER_TAG; fi); else echo $VERSION; fi)
-API_KEYS=$(if [ -z ${API_KEYS-} ]; then echo "[]"; else echo -n "[" $(IFS=',' read -ra keys <<< "$API_KEYS"; for key in ${keys[@]}; do echo -n "\"$key\","; done); echo -n "]"; fi)
-
 pushd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/..
+
+TF_IN_AUTOMATION
+TF_PLAN=terraform.tfplan
+
+function clean_and_exit {
+  [ -f ${TERRAFORM_PLAN} ] && rm -f $TERRAFORM_PLAN
+
+  popd
+}
+
+trap clean_and_exit EXIT
+trap 'exit' ERR
+
+[ -z ${NAME-} ] && exit 1
+USER_ENV=env.sh
+[ -f ${USER_ENV} ] && set -a; . $USER_ENV; set +a
 
 [ -z ${ANTIFRAGILE_STATE_AWS_REGION-} ] || [ -z ${ANTIFRAGILE_STATE_AWS_S3_BUCKET-} ] || [ -z ${ANTIFRAGILE_STATE_AWS_DYNAMODB_TABLE-} ] || \
 terraform init -upgrade \
@@ -17,19 +28,14 @@ terraform init -upgrade \
 
 terraform get -update=true || exit 1
 
-terraform taint -module=${NAME}.cluster.services.tasks aws_ecs_task_definition.antifragile-service
+USER_PRE_DEPLOY=./pre-deploy.sh
+[ -x ${USER_PRE_DEPLOY} ] && $(eval $USER_PRE_DEPLOY)
 
-terraform plan \
--var "version=${VERSION}" \
--var "docker_repo=${DOCKER_REPO}" \
--var "domain_name=${ANTIFRAGILE_INFRASTRUCTURE_DOMAIN_NAME}" \
--var "api_keys=${API_KEYS}" \
--out terraform.tfplan || exit 1
+terraform plan -input=false -out $TF_PLAN || exit 1
 
-terraform apply -auto-approve terraform.tfplan || exit 1
+terraform apply -input=false -auto-approve $TF_PLAN || exit 1
 
-terraform output -json | jq 'with_entries(.value |= .value)' > terraform.json || exit 1
-
-popd
+USER_POST_DEPLOY=./post-deploy.sh
+[ -x ${USER_POST_DEPLOY} ] && $(eval $USER_POST_DEPLOY)
 
 exit 0
