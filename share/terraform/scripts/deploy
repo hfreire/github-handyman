@@ -2,7 +2,7 @@
 
 pushd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/..
 
-TF_IN_AUTOMATION
+TF_IN_AUTOMATION=true
 TF_PLAN=terraform.tfplan
 
 function clean_and_exit {
@@ -16,7 +16,7 @@ trap 'exit' ERR
 
 [ -z ${NAME-} ] && exit 1
 USER_ENV=env.sh
-[ -f ${USER_ENV} ] && set -a; . $USER_ENV; set +a
+[ -f ${USER_ENV} ] && (set -a; . $USER_ENV; set +a)
 
 [ -z ${ANTIFRAGILE_STATE_AWS_REGION-} ] || [ -z ${ANTIFRAGILE_STATE_AWS_S3_BUCKET-} ] || [ -z ${ANTIFRAGILE_STATE_AWS_DYNAMODB_TABLE-} ] || \
 terraform init -upgrade \
