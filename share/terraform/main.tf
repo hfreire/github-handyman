@@ -5,28 +5,8 @@ terraform {
   }
 }
 
-provider "aws" {
-  region  = var.aws_region
-  version = "2.14.0"
-}
+module "github-handyman" {
+  source = "github.com/antifragile-systems/antifragile-serverless"
 
-data "aws_vpc" "selected" {
-  tags = {
-    Name = var.infrastructure_name
-  }
-}
-
-data "aws_subnet_ids" "selected" {
-  vpc_id = data.aws_vpc.selected.id
-
-  tags = {
-    IsPrivateSubnet = true
-  }
-}
-
-data "aws_security_groups" "selected" {
-  tags = {
-    IsAntifragile = true
-    Name          = "serverless"
-  }
+  infrastructure_name = var.infrastructure_name
 }
