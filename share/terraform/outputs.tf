@@ -5,7 +5,7 @@ output "aws_region" {
 }
 
 output "aws_vpc_id" {
-  value = module.github-handyman.aws_vpc
+  value = module.github-handyman.aws_vpc_id
 
   sensitive = true
 }
@@ -17,7 +17,7 @@ output "aws_subnet_ids" {
 }
 
 output "aws_security_group_ids" {
-  value = module.github-handyman.aws_security_groups
+  value = module.github-handyman.aws_security_group_ids
 
   sensitive = true
 }
