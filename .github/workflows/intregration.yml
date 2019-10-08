@@ -22,5 +22,7 @@ jobs:
         run: npm test
       - name: coveralls
         run: npm run coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       - name: semantic-release
         run: npm run semantic-release
