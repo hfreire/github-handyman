@@ -1,4 +1,4 @@
-name: Integration
+name: continous-integration
 
 on: [push]
 
@@ -20,7 +20,7 @@ jobs:
         run: npm run build --if-present
       - name: Test code
         run: npm test
-      - name: Submit coveralls
+      - name: Submit coveralls coverage report
         run: npm run coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
