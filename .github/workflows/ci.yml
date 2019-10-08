@@ -3,7 +3,7 @@ name: continous-integration
 on: [push]
 
 jobs:
-  test:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -16,14 +16,67 @@ jobs:
         run: |
           npm install
           npm prune
+      - uses: actions/upload-artifact@master
+        with:
+          name: node_modules
+          path: node_modules
       - name: Build code
         run: npm run build --if-present
+
+  test:
+    needs: [build]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.13
+      - uses: actions/download-artifact@master
+        with:
+          name: node_modules
       - name: Test code
         run: npm test
+      - uses: actions/upload-artifact@master
+        with:
+          name: coverage
+          path: coverage
+
+  coverage:
+    needs: [test]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.13
+      - uses: actions/download-artifact@master
+        with:
+          name: node_modules
+      - uses: actions/download-artifact@master
+        with:
+          name: coverage
       - name: Submit coveralls coverage report
         run: npm run coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
+  release:
+    needs: [test]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.13
+      - uses: actions/download-artifact@master
+        with:
+          name: node_modules
       - name: Check if release should be created
         run: npm run semantic-release
         env:
