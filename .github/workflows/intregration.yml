@@ -12,18 +12,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10.13
-      - name: install
+      - name: Install NPM dependencies
         run: |
-          npm install -g greenkeeper-lockfile@1
           npm install
           npm prune
-          greenkeeper-lockfile-update
-      - name: build
+      - name: Build
         run: npm run build --if-present
-      - name: test
-        run: |
-          npm test
-          greenkeeper-lockfile-upload
+      - name: Test
+        run: npm test
       - name: coveralls
         run: npm run coveralls
       - name: semantic-release

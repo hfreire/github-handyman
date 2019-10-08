@@ -14,10 +14,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10.13
-      - name: setup terraform
+      - name: Setup terraform
         run: |
           curl -fSL "https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip" -o terraform.zip && \
           echo "d9a96b646420d7f0a80aa5d51bb7b2a125acead537ab13c635f76668de9b8e32 *terraform.zip" | sha256sum -c - && \
           sudo unzip -d /usr/local/bin/ terraform.zip
-      - name: deploy
+      - name: Deploy
         run: npm run deploy
