@@ -16,13 +16,16 @@ jobs:
         run: |
           npm install
           npm prune
-      - name: Build
+      - name: Build code
         run: npm run build --if-present
-      - name: Test
+      - name: Test code
         run: npm test
-      - name: coveralls
+      - name: Submit coveralls
         run: npm run coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      - name: semantic-release
+      - name: Check if release should be created
         run: npm run semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

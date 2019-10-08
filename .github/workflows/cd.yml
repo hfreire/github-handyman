@@ -19,5 +19,13 @@ jobs:
           curl -fSL "https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip" -o terraform.zip && \
           echo "d9a96b646420d7f0a80aa5d51bb7b2a125acead537ab13c635f76668de9b8e32 *terraform.zip" | sha256sum -c - && \
           sudo unzip -d /usr/local/bin/ terraform.zip
-      - name: Deploy
+      - name: Deploy in AWS
         run: npm run deploy
+        env:
+          ANTIFRAGILE_INFRASTRUCTURE_DOMAIN_NAME: ${{ secrets.ANTIFRAGILE_INFRASTRUCTURE_DOMAIN_NAME }}
+          ANTIFRAGILE_STATE_AWS_DYNAMODB_TABLE: ${{ secrets.ANTIFRAGILE_STATE_AWS_DYNAMODB_TABLE }}
+          ANTIFRAGILE_STATE_AWS_REGION: ${{ secrets.ANTIFRAGILE_STATE_AWS_REGION }}
+          ANTIFRAGILE_STATE_AWS_S3_BUCKET: ${{ secrets.ANTIFRAGILE_STATE_AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GH_ORGS: ${{ secrets.GH_ORGS }}
