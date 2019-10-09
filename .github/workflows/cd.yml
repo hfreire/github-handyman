@@ -9,6 +9,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      GH_ORGS: ${{ secrets.GH_ORGS }}
+
     steps:
       - uses: actions/checkout@v1
       - name: Setup terraform
@@ -25,4 +28,3 @@ jobs:
           ANTIFRAGILE_STATE_AWS_S3_BUCKET: ${{ secrets.ANTIFRAGILE_STATE_AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          GH_ORGS: ${{ secrets.GH_ORGS }}
