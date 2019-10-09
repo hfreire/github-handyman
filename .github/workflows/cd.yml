@@ -10,10 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GH_ORGS: ${{ secrets.GH_ORGS }}
+      CI: true
 
     steps:
       - uses: actions/checkout@v1
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.13
+      - name: Install NPM dependencies
+        run: npm ci
+      - name: Build source code
+        run: npm run build --if-present
       - name: Setup terraform
         run: |
           curl -fSL "https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip" -o terraform.zip && \
@@ -28,3 +37,4 @@ jobs:
           ANTIFRAGILE_STATE_AWS_S3_BUCKET: ${{ secrets.ANTIFRAGILE_STATE_AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GH_ORGS: ${{ secrets.GH_ORGS }}
