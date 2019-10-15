@@ -1,4 +1,4 @@
-name: continuous-deployment
+name: cd
 
 on:
   release:
