@@ -25,8 +25,8 @@ jobs:
         run: npm run build --if-present
       - name: Setup terraform
         run: |
-          curl -fSL "https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip" -o terraform.zip && \
-          echo "d9a96b646420d7f0a80aa5d51bb7b2a125acead537ab13c635f76668de9b8e32 *terraform.zip" | sha256sum -c - && \
+          curl -fSL "https://releases.hashicorp.com/terraform/0.12.9/terraform_0.12.9_linux_amd64.zip" -o terraform.zip && \
+          echo "69712c6216cc09b7eca514b9fb137d4b1fead76559c66f338b4185e1c347ace5 *terraform.zip" | sha256sum -c - && \
           sudo unzip -o -d /usr/local/bin/ terraform.zip
       - name: Deploy in AWS
         run: npm run deploy
