@@ -11,6 +11,7 @@ jobs:
 
     env:
       CI: true
+      TF_IN_AUTOMATION: true
 
     steps:
       - uses: actions/checkout@v1
