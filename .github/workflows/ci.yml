@@ -9,6 +9,7 @@ jobs:
 
     env:
       CI: true
+      VERSION_COMMIT: $GITHUB_SHA
 
     steps:
       - uses: actions/checkout@v1
