@@ -24,7 +24,7 @@ handyman.on('pulls:close', (owner, repo, number) => console.info(`Closed pull re
 module.exports = async () => {
   for (const owner of owners) {
     try {
-      await handyman.helpOutWithPullRequests(owner, { repoConcurrency: 10, pullConcurrency: 5 })
+      await handyman.helpOutWithPullRequests(owner, { repoConcurrency: 5, pullConcurrency: 2 })
     } catch (error) {
       console.error(error)
     }
