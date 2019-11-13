@@ -26,7 +26,7 @@
     "eslint": "6.6.0",
     "eslint-config-hfreire": "2.0.4",
     "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-jest": "23.0.2",
+    "eslint-plugin-jest": "23.0.3",
     "eslint-plugin-json": "2.0.1",
     "eslint-plugin-mocha": "6.2.1",
     "eslint-plugin-node": "10.0.0",
@@ -37,9 +37,9 @@
     "npm-merge-driver": "2.3.5",
     "pre-git": "3.17.1",
     "semantic-release": "15.13.30",
-    "serverless": "1.56.1",
+    "serverless": "1.57.0",
     "serverless-plugin-include-dependencies": "4.0.0",
-    "snyk": "1.243.0"
+    "snyk": "1.247.1"
   },
   "config": {
     "pre-git": {
