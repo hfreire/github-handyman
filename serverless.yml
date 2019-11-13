@@ -9,6 +9,7 @@ provider:
   region: ${file(share/terraform/terraform.json):aws_region}
   memorySize: 128
   versionFunctions: false
+  role: ${file(share/terraform/terraform.json):aws_iam_role_arn}
   vpc:
     subnetIds: ${file(share/terraform/terraform.json):aws_subnet_ids}
     securityGroupIds: ${file(share/terraform/terraform.json):aws_security_group_ids}
