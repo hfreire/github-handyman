@@ -39,6 +39,7 @@ package:
     - README.md
     - src/**
     - coverage/**
+    - share/**
 
 functions:
   handler:
