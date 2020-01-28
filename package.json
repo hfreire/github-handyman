@@ -20,14 +20,14 @@
     "lodash.words": "4.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.7.7",
-    "@babel/core": "7.7.7",
-    "@babel/preset-env": "7.7.7",
+    "@babel/cli": "7.8.3",
+    "@babel/core": "7.8.3",
+    "@babel/preset-env": "7.8.3",
     "coveralls": "3.0.9",
     "eslint": "6.8.0",
     "eslint-config-hfreire": "2.0.5",
-    "eslint-plugin-import": "2.19.1",
-    "eslint-plugin-jest": "23.3.0",
+    "eslint-plugin-import": "2.20.0",
+    "eslint-plugin-jest": "23.6.0",
     "eslint-plugin-json": "2.0.1",
     "eslint-plugin-mocha": "6.2.2",
     "eslint-plugin-node": "11.0.0",
@@ -37,10 +37,10 @@
     "jest": "24.9.0",
     "npm-merge-driver": "2.3.5",
     "pre-git": "3.17.1",
-    "semantic-release": "16.0.0",
-    "serverless": "1.60.5",
-    "serverless-plugin-include-dependencies": "4.0.0",
-    "snyk": "1.277.3"
+    "semantic-release": "17.0.1",
+    "serverless": "1.61.3",
+    "serverless-plugin-include-dependencies": "4.0.1",
+    "snyk": "1.286.0"
   },
   "config": {
     "pre-git": {
