@@ -67,7 +67,7 @@ const findGreenkeeperCommentAboutLatestVersion = (comments) => {
 
 const isCombinedStatusAndAllChecksSuccessful = (pull) => {
   const isCombinedStatusSuccess = pull.combinedStatus.state === 'success'
-  const areAllChecksSuccessful = _.find(pull.checks.check_runs, ({ conclusion }) => conclusion !== 'success')
+  const areAllChecksSuccessful = !_.find(pull.checks.check_runs, ({ conclusion }) => conclusion !== 'success')
 
   return isCombinedStatusSuccess && areAllChecksSuccessful
 }
