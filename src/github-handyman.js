@@ -65,14 +65,21 @@ const findGreenkeeperCommentAboutLatestVersion = (comments) => {
   return decodeURIComponent(encodedHead)
 }
 
+const isCombinedStatusAndAllChecksSuccessful = (pull) => {
+  const isCombinedStatusSuccess = pull.combinedStatus.state === 'success'
+  const areAllChecksSuccessful = _.find(pull.checks.check_runs, ({ conclusion }) => conclusion !== 'success')
+
+  return isCombinedStatusSuccess && areAllChecksSuccessful
+}
+
 const mergeDependabotPullRequest = async function (user, owner, repo, pull) {
   if (!isDependabotPull(pull)) {
     return
   }
 
-  const isSuccess = pull.combinedStatus.state === 'success'
+  const isMergeable = isCombinedStatusAndAllChecksSuccessful(pull)
 
-  if (isSuccess) {
+  if (isMergeable) {
     const reviews = await this._github.listPullRequestReviews(owner, repo, pull.number)
     if (!_.find(reviews, { user: { login: user } })) {
       await this._github.requestPullRequestReview(owner, repo, pull.number, [ user ])
@@ -93,16 +100,16 @@ const mergeGreenkeeperPullRequest = async function (user, owner, repo, pull) {
     return
   }
 
-  const isSuccess = pull.combinedStatus.state === 'success'
+  const isMergeable = isCombinedStatusAndAllChecksSuccessful(pull)
 
-  if (isSuccess) {
+  if (isMergeable) {
     await this._github.mergePullRequest(owner, repo, pull.number, pull.head.sha)
     this.emit('pulls:merge', owner, repo, pull.number, pull.head.sha, 'squash')
 
     return
   }
 
-  if (!isSuccess && isGreenkeeperPull(pull)) {
+  if (!isMergeable && isGreenkeeperPull(pull)) {
     const comments = await this._github.getPullRequestComments(owner, repo, pull.number)
     const head = findGreenkeeperCommentAboutLatestVersion(comments)
 
