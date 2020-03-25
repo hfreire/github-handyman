@@ -44,4 +44,4 @@ jobs:
           GH_ORGS: ${{ secrets.GH_ORGS }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           TF_VAR_state_aws_s3_bucket: ${{ secrets.ANTIFRAGILE_STATE_AWS_S3_BUCKET }}
-          TF_VAR_state_aws_region=eu-west-1: ${{ secrets.ANTIFRAGILE_STATE_AWS_REGION }}
+          TF_VAR_state_aws_region=: ${{ secrets.ANTIFRAGILE_STATE_AWS_REGION }}
