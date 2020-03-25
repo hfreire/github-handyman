@@ -27,3 +27,7 @@ output "aws_iam_role_arn" {
 
   sensitive = true
 }
+
+output "aws_s3_bucket" {
+  value = module.github-handyman.aws_s3_bucket
+}

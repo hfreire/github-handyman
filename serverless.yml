@@ -5,11 +5,17 @@ frameworkVersion: ">=1.1.0 <2.0.0"
 provider:
   name: aws
   stage: ${opt:stage, 'production'}
-  runtime: nodejs10.x
+  runtime: nodejs12.x
   region: ${file(share/terraform/terraform.json):aws_region}
   memorySize: 128
+  deploymentBucket:
+    name: ${file(share/terraform/terraform.json):aws_s3_bucket}
+    maxPreviousDeploymentArtifacts: 3
+    blockPublicAccess: true
+  deploymentPrefix: serverless
   versionFunctions: false
   role: ${file(share/terraform/terraform.json):aws_iam_role_arn}
+  logRetentionInDays: 30
   vpc:
     subnetIds: ${file(share/terraform/terraform.json):aws_subnet_ids}
     securityGroupIds: ${file(share/terraform/terraform.json):aws_security_group_ids}
@@ -24,6 +30,7 @@ plugins:
 
 package:
   exclude:
+    - .github/**
     - node_modules/**
     - .serverless/**
     - serverless.yml
@@ -33,10 +40,13 @@ package:
     - '*.iml'
     - test/**
     - package.json
+    - package-lock.json
     - .babelrc
     - .eslintignore
     - .eslintrc
+    - CONTRIBUTING.md
     - README.md
+    - LICENSE.md
     - src/**
     - coverage/**
     - share/**
@@ -47,10 +57,3 @@ functions:
     events:
       - schedule: rate(1 hour)
     timeout: 600
-
-resources:
-  Resources:
-    HandlerLogGroup:
-      Type: AWS::Logs::LogGroup
-      Properties:
-        RetentionInDays: 30

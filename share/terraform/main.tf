@@ -6,7 +6,7 @@ terraform {
 }
 
 provider "aws" {
-  version = "2.14.0"
+  version = "2.54.0"
 
   region = var.aws_region
 }
@@ -18,6 +18,8 @@ module "github-handyman" {
   name                = var.name
 
   aws_region = var.aws_region
+  state_aws_region = var.state_aws_region
+  state_aws_s3_bucket = var.state_aws_s3_bucket
 }
 
 data "aws_caller_identity" "current" {
@@ -37,19 +39,11 @@ resource "aws_iam_role_policy" "github-handyman" {
     "Statement": [
         {
             "Action": [
-                "logs:CreateLogStream"
-            ],
-            "Resource": [
-                "arn:aws:logs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:log-group:/${var.infrastructure_name}/${var.name}*:*"
-            ],
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
+                "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
             "Resource": [
-                "arn:aws:logs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:log-group:/${var.infrastructure_name}/${var.name}*:*:*"
+                "arn:aws:logs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:log-group:/${var.infrastructure_name}/${var.name}*:*"
             ],
             "Effect": "Allow"
         },
@@ -66,4 +60,33 @@ resource "aws_iam_role_policy" "github-handyman" {
     ]
 }
 EOF
+}
+
+data "aws_sns_topic" "selected" {
+  name = var.infrastructure_name
+}
+
+resource "aws_cloudwatch_metric_alarm" "github-handyman" {
+  alarm_name = "${var.name} error count"
+
+  metric_name = "Errors"
+  namespace   = "AWS/Lambda"
+
+  dimensions = {
+    FunctionName = "github-handyman-production-fetch"
+  }
+
+  threshold           = 1
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  period              = 60
+  statistic           = "Sum"
+  treat_missing_data  = "notBreaching"
+
+  alarm_actions = [
+    data.aws_sns_topic.selected.arn
+  ]
+  ok_actions    = [
+    data.aws_sns_topic.selected.arn
+  ]
 }
