@@ -79,7 +79,7 @@ resource "aws_cloudwatch_metric_alarm" "github-handyman" {
   threshold           = 1
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
-  period              = 60
+  period              = 3600
   statistic           = "Sum"
   treat_missing_data  = "notBreaching"
 
