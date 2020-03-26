@@ -73,7 +73,7 @@ resource "aws_cloudwatch_metric_alarm" "github-handyman" {
   namespace   = "AWS/Lambda"
 
   dimensions = {
-    FunctionName = "github-handyman-production-fetch"
+    FunctionName = "github-handyman-production-handler"
   }
 
   threshold           = 1
