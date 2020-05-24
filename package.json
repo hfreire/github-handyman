@@ -37,7 +37,7 @@
     "jest": "26.0.1",
     "npm-merge-driver": "2.3.6",
     "pre-git": "3.17.1",
-    "semantic-release": "17.0.7",
+    "semantic-release": "17.0.8",
     "serverless": "1.71.3",
     "serverless-plugin-include-dependencies": "4.1.0",
     "snyk": "1.327.0"
