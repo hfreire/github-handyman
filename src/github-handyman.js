@@ -30,7 +30,7 @@ const parallel = async (functions, parallelism = 1) => {
 }
 
 const isDependabotPull = (pull) => {
-  return pull.user.login === 'dependabot-preview[bot]'
+  return pull.user.login === 'dependabot-preview[bot]' || pull.user.login === 'dependabot[bot]'
 }
 
 const isGreenkeeperPull = (pull) => {
