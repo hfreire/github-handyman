@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/cli": "7.12.16",
-    "@babel/core": "7.12.16",
+    "@babel/core": "7.12.17",
     "@babel/preset-env": "7.12.16",
     "coveralls": "3.1.0",
     "eslint": "6.8.0",
