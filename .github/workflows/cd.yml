@@ -41,7 +41,7 @@ jobs:
           ANTIFRAGILE_STATE_AWS_S3_BUCKET: ${{ secrets.ANTIFRAGILE_STATE_AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          GH_ORGS: ${{ secrets.GH_ORGS }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_HANDYMAN_WHITELISTED_ORGS: ${{ secrets.GH_HANDYMAN_WHITELISTED_ORGS }}
+          GITHUB_HANDYMAN_GITHUB_TOKEN: ${{ secrets.GH_HANDYMAN_GITHUB_TOKEN }}
           TF_VAR_state_aws_s3_bucket: ${{ secrets.ANTIFRAGILE_STATE_AWS_S3_BUCKET }}
           TF_VAR_state_aws_region: ${{ secrets.ANTIFRAGILE_STATE_AWS_REGION }}
