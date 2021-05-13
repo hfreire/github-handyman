@@ -20,8 +20,8 @@ provider:
     subnetIds: ${file(share/terraform/terraform.json):aws_subnet_ids}
     securityGroupIds: ${file(share/terraform/terraform.json):aws_security_group_ids}
   environment:
-    GITHUB_TOKEN: ${env:GITHUB_HANDYMAN_GITHUB_TOKEN}
-    WHITELISTED_ORGS: ${env:GITHUB_HANDYMAN_WHITELISTED_ORGS}
+    GITHUB_HANDYMAN_GITHUB_TOKEN: ${env:GITHUB_HANDYMAN_GITHUB_TOKEN}
+    GITHUB_HANDYMAN_WHITELISTED_ORGS: ${env:GITHUB_HANDYMAN_WHITELISTED_ORGS}
   tracing:
     lambda: true
 
