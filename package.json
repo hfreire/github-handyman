@@ -39,7 +39,7 @@
     "semantic-release": "17.4.5",
     "serverless": "2.55.0",
     "serverless-plugin-include-dependencies": "5.0.0",
-    "snyk": "1.683.0"
+    "snyk": "1.684.0"
   },
   "config": {
     "pre-git": {
