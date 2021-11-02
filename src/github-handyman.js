@@ -1,9 +1,11 @@
 /*
- * Copyright (c) 2019, Hugo Freire <hugo@exec.sh>.
+ * Copyright (c) 2021, Hugo Freire <hugo@exec.sh>.
  *
  * This source code is licensed under the license found in the
  * LICENSE.md file in the root directory of this source tree.
  */
+
+const REPO_TOPICS = process.env.GITHUB_HANDYMAN_REPO_TOPICS || [ 'github-handyman' ]
 
 const EventEmitter = require('events')
 
@@ -192,7 +194,7 @@ class GitHubHandyman extends EventEmitter {
 
   async helpOutWithPullRequests (org, options = { repoConcurrency: 1, pullConcurrency: 1 }) {
     const user = await this._github.getUser()
-    const repos = !org ? await this._github.getUserRepos() : await this._github.getOrgRepos(org)
+    const repos = !org ? await this._github.getUserRepos(REPO_TOPICS) : await this._github.getOrgRepos(org, REPO_TOPICS)
     const owner = !org ? user : org
 
     await mergeRobotPullRequests.bind(this)(user, owner, repos, options)
