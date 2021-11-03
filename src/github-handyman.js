@@ -68,13 +68,13 @@ const findGreenkeeperCommentAboutLatestVersion = (comments) => {
 }
 
 const isCombinedStatusAndAllChecksSuccessful = (pull) => {
-  const isCombinedStatusSuccess = pull.combinedStatus.state === 'success'
+  const isCombinedStatusSuccess = pull.combinedStatus.state === 'success' || pull.combinedStatus.state === 'pending'
   const areAllChecksSuccessful = !_.find(pull.checks.check_runs, ({ conclusion }) => conclusion !== 'success')
 
   return isCombinedStatusSuccess && areAllChecksSuccessful
 }
 
-const mergeDependabotPullRequest = async function (user, owner, repo, pull) {
+const mergeDependabotPullRequest = async function(user, owner, repo, pull) {
   if (!isDependabotPull(pull)) {
     return
   }
@@ -97,7 +97,7 @@ const mergeDependabotPullRequest = async function (user, owner, repo, pull) {
   }
 }
 
-const mergeGreenkeeperPullRequest = async function (user, owner, repo, pull) {
+const mergeGreenkeeperPullRequest = async function(user, owner, repo, pull) {
   if (!(isGreenkeeperPull(pull) || isGreenkeeperPullUpdatedByOwner(pull, owner))) {
     return
   }
@@ -121,7 +121,7 @@ const mergeGreenkeeperPullRequest = async function (user, owner, repo, pull) {
   }
 }
 
-const mergeRobotPullRequests = async function (user, owner, repos, { repoConcurrency, pullConcurrency }) {
+const mergeRobotPullRequests = async function(user, owner, repos, { repoConcurrency, pullConcurrency }) {
   const handlePull = async (repo, pull) => {
     if (isGreenkeeperPull(pull)) {
       try {
@@ -156,7 +156,7 @@ const mergeRobotPullRequests = async function (user, owner, repos, { repoConcurr
   await Promise.all(promises)
 }
 
-const updateGreenkeeperPullRequest = async function (owner, repo, title, head, number) {
+const updateGreenkeeperPullRequest = async function(owner, repo, title, head, number) {
   const pull = await this._github.createPullRequest(owner, repo, title, head, 'master')
   this.emit('pulls:create', owner, repo, title, head, 'master')
 
@@ -172,7 +172,7 @@ const updateGreenkeeperPullRequest = async function (owner, repo, title, head, n
   return pull
 }
 
-const updateGreenkeeperPullRequestWithLatestVersion = async function (owner, repo, number, head) {
+const updateGreenkeeperPullRequestWithLatestVersion = async function(owner, repo, number, head) {
   const [ , , dependency, version ] = /(\w+)\/(.*)-(\d.+)/.exec(head)
   const title = `Update ${dependency} to ${version}`
 
