@@ -76,7 +76,7 @@ const isCombinedStatusAndAllChecksSuccessful = (pull) => {
   return isCombinedStatusSuccess && areAllChecksSuccessful
 }
 
-const mergeDependabotPullRequest = async function(user, owner, repo, pull) {
+const mergeDependabotPullRequest = async function (user, owner, repo, pull) {
   if (!isDependabotPull(pull)) {
     return
   }
@@ -99,7 +99,7 @@ const mergeDependabotPullRequest = async function(user, owner, repo, pull) {
   }
 }
 
-const mergeGreenkeeperPullRequest = async function(user, owner, repo, pull) {
+const mergeGreenkeeperPullRequest = async function (user, owner, repo, pull) {
   if (!(isGreenkeeperPull(pull) || isGreenkeeperPullUpdatedByOwner(pull, owner))) {
     return
   }
@@ -123,7 +123,10 @@ const mergeGreenkeeperPullRequest = async function(user, owner, repo, pull) {
   }
 }
 
-const mergeRobotPullRequests = async function(user, owner, repos, { repoConcurrency, pullConcurrency }) {
+const mergeRobotPullRequests = async function (user, owner, repos, {
+  repoConcurrency,
+  pullConcurrency
+}) {
   const handlePull = async (repo, pull) => {
     if (isGreenkeeperPull(pull)) {
       try {
@@ -158,12 +161,17 @@ const mergeRobotPullRequests = async function(user, owner, repos, { repoConcurre
   await Promise.all(promises)
 }
 
-const updateGreenkeeperPullRequest = async function(owner, repo, title, head, number) {
+const updateGreenkeeperPullRequest = async function (owner, repo, title, head, number) {
   const pull = await this._github.createPullRequest(owner, repo, title, head, 'master')
   this.emit('pulls:create', owner, repo, title, head, 'master')
 
   try {
-    await this._github.octokit.issues.addLabels({ owner, repo, issue_number: pull.number, labels: [ 'greenkeeper' ] })
+    await this._github.octokit.issues.addLabels({
+      owner,
+      repo,
+      issue_number: pull.number,
+      labels: [ 'greenkeeper' ]
+    })
     await this.closePullRequest(owner, repo, number)
     this.emit('pulls:close', owner, repo, number)
   } catch (error) {
@@ -174,7 +182,7 @@ const updateGreenkeeperPullRequest = async function(owner, repo, title, head, nu
   return pull
 }
 
-const updateGreenkeeperPullRequestWithLatestVersion = async function(owner, repo, number, head) {
+const updateGreenkeeperPullRequestWithLatestVersion = async function (owner, repo, number, head) {
   const [ , , dependency, version ] = /(\w+)\/(.*)-(\d.+)/.exec(head)
   const title = `Update ${dependency} to ${version}`
 
@@ -194,7 +202,10 @@ class GitHubHandyman extends EventEmitter {
     this._github = new GitHubWrapper(this._options.github)
   }
 
-  async helpOutWithPullRequests (org, options = { repoConcurrency: 1, pullConcurrency: 1 }) {
+  async helpOutWithPullRequests (org, options = {
+    repoConcurrency: 1,
+    pullConcurrency: 1
+  }) {
     const user = await this._github.getUser()
     const repos = !org ? await this._github.getUserRepos(REPO_TOPICS) : await this._github.getOrgRepos(org, REPO_TOPICS)
     const owner = !org ? user : org
