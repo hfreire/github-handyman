@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/hfreire/github-handyman#readme",
   "dependencies": {
-    "@dog-ai/github-wrapper": "2.0.21",
+    "@dog-ai/github-wrapper": "2.0.28",
     "lodash": "4.17.21"
   },
   "devDependencies": {
