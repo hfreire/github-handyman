@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/cli": "7.22.15",
-    "@babel/core": "7.22.17",
+    "@babel/core": "7.22.19",
     "@babel/preset-env": "7.22.15",
     "eslint": "6.8.0",
     "eslint-config-hfreire": "2.0.7",
