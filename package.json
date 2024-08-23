@@ -37,7 +37,7 @@
     "npm-merge-driver": "2.3.6",
     "pre-git": "3.17.1",
     "semantic-release": "17.4.6",
-    "serverless": "4.2.1",
+    "serverless": "4.2.3",
     "serverless-plugin-include-dependencies": "6.1.1",
     "snyk": "1.1292.4"
   },
